@@ -1,0 +1,9 @@
+  sum [x] 
+=   { changing notation }
+  sum (x:[]) 
+=   { applying sum }
+  x + sum []
+=   { applying sun }
+  x + 0
+=   { applying + }
+  x

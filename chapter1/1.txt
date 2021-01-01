@@ -1,0 +1,14 @@
+  double (double 2)
+=   { applying the outer double }
+  double 2 + double 2
+=   {applying the second double }
+  double 2 + (2 + 2)
+=   {applying the first double }
+  (2 + 2) + (2 + 2)
+=   { applying + }
+  4 + (2 + 2) 
+=   { applying + }
+  4 + 4
+=   { applying + }
+  8
+
