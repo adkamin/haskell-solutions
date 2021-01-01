@@ -1,0 +1,1 @@
+It is not feasable since it is not computable whether or not a function terminates. It would be feasable in case we are guaranteed the functions terminate.
