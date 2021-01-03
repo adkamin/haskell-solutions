@@ -52,7 +52,6 @@ positions x xs = [i | (x',i) <- zip xs [0..], x == x']
 crack :: String -> String
 crack xs = decode factor xs
   where
-    --factor = head (positions (minimum chitab) chitab)
-    factor = minimum chitab
+    factor = head (positions (minimum chitab) chitab)
     chitab = [chisqr (rotate n table') table | n <- [0..25]]
     table' = freqs xs

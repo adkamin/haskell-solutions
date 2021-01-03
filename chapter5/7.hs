@@ -4,4 +4,4 @@ compr = [(x,y) | x <- [1,2], y <- [3,4]]
 
 -- two comprehensions with single generators
 comprNew :: [(Int,Int)]
-comprNew = [[(x,y) | x <- [1,2]] | y <- [3,4]]
+comprNew = concat [[(x,y) | y <- [3,4]] | x <- [1,2]]
