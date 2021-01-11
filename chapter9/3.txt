@@ -1,0 +1,1 @@
+In solutions, when exprs is called recursively, it will get stuck with trying to divide an empty list and then again divide that and so on.
