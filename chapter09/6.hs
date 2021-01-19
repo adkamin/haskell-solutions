@@ -1,3 +1,5 @@
+import Data.List
+
 data Op = Add | Sub | Mul | Div | Exp
 
 instance Show Op where
@@ -6,6 +8,21 @@ instance Show Op where
    show Mul = "*"
    show Div = "/"
    show Exp = "^"
+
+instance Ord Op where
+   Add <= _   = True
+   Sub <= e   = e /= Add
+   Mul <= e   = e /= Add && e /= Sub
+   Div <= e   = e /= Add && e /= Sub && e /= Mul
+   _   <= _   = False
+
+instance Eq Op where
+   Add == Add = True
+   Sub == Sub = True
+   Mul == Mul = True
+   Div == Div = True
+   Exp == Exp = True
+   _   == _   = False
 
 -- applies an operator to two positive naturals, returns another positive natural 
 apply :: Op -> Int -> Int -> Int
@@ -24,6 +41,22 @@ instance Show Expr where
                          brak (Val n) = show n
                          brak e       = "(" ++ show e ++ ")"
 
+instance Ord Expr where
+   Val n <= Val m            = n <= m
+   Val n <= App o l r        = True
+   App o l r <= Val n        = False
+   App o l r <= App o' l' r' = if l <= l' then o <= o'
+                               else False
+
+instance Eq Expr where
+   Val n     == Val m        = n == m
+   Val n     == _            = False
+   _         == Val n        = False
+   App o l r == App o' l' r' = o == o' && l == l' && r == r'
+
+lengthExpr :: Expr -> Int
+lengthExpr (Val n) = 1
+lengthExpr (App o l r) = lengthExpr l + lengthExpr r
 
 -- returns the overall value of an expression
 eval :: Expr -> [Int]
@@ -98,8 +131,13 @@ findClosest ns n bound = if null sols then (findClosest ns (n-1) (bound-1))
                                where sols = solutions' ns n
 
 main :: IO ()
-main = print (resutls [1,2])                -- implementation of exponentiation 
-       print (findClosest [1,2] 5 2)        -- returning the closest results
-       --print (order (findClosest [1,2] 3 2) -- ordering
+main = do print (results [1,2])                     -- implementation of exponentiation 
+          print (findClosest [1,2] 5 2)             -- returning the closest results
+          print (sort (findClosest [1,2,3,4] 5 2))  -- ordering(*)
 
+-- (*):
+-- ordering is from the leftmost sub-expression to the rightmost one
+-- expressions of type Val Int are smaller than those of type App Op Expr Expr
+-- expressions of type Val n Val m are compared on n and m
+-- operators are ordered in the following way: + - * / ^
 

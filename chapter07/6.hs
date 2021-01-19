@@ -3,10 +3,9 @@ import Data.List
 
 type Bit = Int
 
-unfold :: (a -> Bool) -> (a -> a) -> (a -> a) -> a -> [a]
-unfold p h t x
-  | p x = []
-  | otherwise = h x : unfold p h t (t x)
+unfold :: (a -> Bool) -> (a -> b) -> (a -> a) -> a -> [b]
+unfold p h t x | p x = []
+               | otherwise = h x : unfold p h t (t x)
 
 int2binOld :: Int -> [Bit]
 int2binOld 0 = []
@@ -26,11 +25,11 @@ mapOld :: (a -> b) -> [a] -> [b]
 mapOld f []     = []
 mapOld f (x:xs) = f x : mapOld f xs
 
---map :: (a -> b) -> [a] -> [b]
---map f = unfold (==[]) (f (head)) (tail)
+map :: (a -> b) -> [a] -> [b]
+map f = unfold (null) (f . head) (tail)
 
 iterateOld :: (a -> a) -> a -> [a]
 iterateOld f a = a : iterateOld f (f a)
 
---iterate :: (a -> a) -> a -> [a]
---iterate f a = unfold (==[]) (id . head) (f . tail)
+iterate :: (a -> a) -> a -> [a]
+iterate f = unfold (\_ -> False) (id) (f)
