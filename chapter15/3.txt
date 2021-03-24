@@ -1,0 +1,11 @@
+mult = \x -> (\y -> x * y)
+
+  mult 3 4
+=   { applying mult }
+  (\x -> (\y -> x * y)) 3 4
+=   { applying the lambda }
+  (\x -> (\y -> 3 * y)) 4
+=   { applying the lambda }
+  3 * 4
+=   { applying * }
+  12

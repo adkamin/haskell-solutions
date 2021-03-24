@@ -1,0 +1,37 @@
+take 0 _      = []
+take _ []     = []
+take n (x:xs) = x : take (n-1) xs
+
+drop 0 xs     = xs
+drop _ []     = []
+drop n (x:xs) = drop (n-1) xs
+
+To prove: take n xs ++ drop n xs = xs 
+
+Case 1, n = 0:
+
+  take 0 xs ++ drop 0 xs 
+=   { applying take }
+  [] ++ drop 0 xs
+=   { applying drop }
+  [] ++ xs
+=   { applying ++ }
+  xs
+
+Case 2, xs = []:
+
+  take n [] ++ drop n []
+=   { applying take } 
+  [] ++ drop n []
+=   { applying drop }
+  [] ++ []
+=   { applying ++ }
+  []
+
+Case 3, xs = (x:xs):
+
+  take n (x:xs) ++ drop n (x:xs)
+=   { applying take and drop }
+  x : take (n-1) xs ++ drop (n-1) xs)
+=   { applying IH }
+  (x:xs)

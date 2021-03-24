@@ -1,0 +1,71 @@
+data Tree a = Leaf a | Node (Tree a) (Tree a)
+
+instance Functor Tree where
+  -- fmap :: (a -> b) -> Tree a -> Tree b
+  fmap g (Leaf x) = Leaf (g x) 
+  fmap g (Node l r) = Node (fmap g l) (fmap g r)
+  
+The functor laws: 
+fmap id    = id
+fmap g . h = fmap g . fmap h
+
+To prove: fmap id t = id t
+
+Base case, t = Leaf x
+
+  fmap id (Leaf x)
+=   { applying id }
+  Leaf (id x)
+=   { applying id }
+  Lead x
+=   { unapplying id }
+  id (Leaf x)
+
+Inductive case, t = (Node x y)
+IH1: fmap id x = id x
+IH2: fmap id y = id y
+
+  fmap id (Node x y)
+=   { applying fmap }
+  Node (fmap id x) (fmap id y)
+=   { applying IH1, IH2 }
+  Node (id x) (id y)
+=   { applying id }
+  Node x y
+=   { unapplying id }
+  id (Node x y)
+
+
+To prove: fmap (g . h) t = (fmap g . fmap h) t
+
+Base case, t = Leaf x
+
+  fmap (g . h) (Leaf x)
+=   { applying fmap }
+  Leaf (fmap (g . h) x)
+=   { }
+  Leaf (fmap g (h x)
+=   { applying fmap }
+  Leaf (g (h x))
+=   { unapplying fmap }
+  fmap g . (Leaf h x) 
+=   { unapplying fmap }
+  fmap g . fmap h) (Leaf x)
+   
+Inductive case, t = Node x y
+IH1: fmap (g . h) x = (fmap g . fmap h) x
+IH2: fmap (g . h) y = (fmap g . fmap h) y
+
+  fmap (g . h) (Node x y) 
+=   { applying fmap }
+  Node (fmap (g . h) x) (fmap (g . h) y)
+=   { applying IH1, IH2 }
+  Node ((fmap g . fmap h) x) ((fmap g . fmap h) y)
+=   { applying . } 
+  Node (fmap g (fmap h x)) (fmap g (fmap h y))   
+=   { unapplying fmap }
+  fmap g (Node (fmap h x) (fmap h y))
+=   { unapplying fmap }
+  fmap g (fmap h (Node x y)
+=   { unapplying . }
+  (fmap g . fmap h) (Node x y)

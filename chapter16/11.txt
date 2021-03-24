@@ -1,0 +1,37 @@
+comp :: Expr -> Code
+comp (Val n) = [PUSH n]
+comp (Add x y) = comp x ++ comp y ++ [ADD]
+
+Show how to build recursive definition of comp' by induction on e
+
+To prove: comp' e c = comp e ++ c
+
+Base case, e = (Val x)
+
+  comp' (Val x) c 
+=   { specification of comp' }
+  comp (Val x) ++ c
+=   { applying comp }
+  [PUSH x] ++ c
+=   { applying ++ }
+  ((PUSH x):c)
+
+Inductive case, e = (Add x y)
+IH1: comp' x c = comp x ++ c
+IH2: comp' y c = comp y ++ c
+
+  comp' (Add x y) c
+=   { specification of comp' }
+  comp (Add x y) ++ c
+=   { applying comp }
+  (comp x ++ comp y ++ [ADD]) ++ c
+=   { applying ++ }
+  (comp x ++ comp y ++ [ADD]:c)
+=   { IH2, c = [ADD]
+  (comp x ++ (comp' y (ADD:c))
+=   { IH2, c = (comp' y (ADD:c))
+  (comp' x (comp' y (ADD:c))
+  
+comp' :: Expr -> Code
+comp' (Val n)   = ((PUSH x):c)
+comp' (Add x y) = (comp' x (comp' y (ADD:c))

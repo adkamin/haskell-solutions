@@ -1,0 +1,33 @@
+data Tree = Leaf Int | Node Tree Tree
+
+countleaves :: Tree a -> Int
+countleaves Leaf i = 1
+countleaves Node t1 t2 = countleaves t1 + countleaves t2
+
+countnodes :: Tree a -> Int
+countnodes Leaf i = 0
+countnodes Note t1 t2 = 1 + countnodes t1 + countnodes t2
+
+To prove: countleaves t = (countnodes t) + 1 
+
+Base case: t = Leaf x
+
+  countleaves (Leaf x) 
+=   { applying countleaves }
+  1
+=   { using property 1 = 0 + 1 }
+  0 + 1 
+=   { unapplying countnodes }
+  countnodes ((Leaf x) + 1)
+  
+Inductive case: t = Node x y
+IH1: countleaves x = (countnodes x) + 1 
+IH2: countleaves y = (countnodes y) + 1 
+
+  countleaves (Node x y)
+=   { applying countleaves }
+  countleaves x + countleaves y
+=   { applying IH1 and IH2 }
+  (countnodes x) + 1 + (countnodes y) + 1
+=   { unapplying countnodes }  
+  countnodes (Node x y) + 1

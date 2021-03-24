@@ -1,0 +1,21 @@
+To prove: add n m = add m n
+Properties to use: 1. add n (Succ m) = (Succ (add n m)
+                   2. add n Zero = n
+	
+1. Base case, n = Zero
+
+  add Zero m
+=   { apllying add }
+  m
+=   { using Property 2 }
+  add m Zero 
+  
+2. Inductive case, n = Succ n. IH = add n m = add m n:
+
+  add (Succ n) m 
+=   { applying add }
+  Succ (add n m)
+=   { applying IH }
+  Succ (add m n)
+=   { using Property 1 }
+  add m (Succ n)

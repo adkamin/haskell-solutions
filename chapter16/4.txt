@@ -1,0 +1,38 @@
+To prove: xs ++ [] = xs
+
+1. Base case, xs = []:
+
+  [] ++ []
+=   { applying ++ }
+  []
+  
+2. Inductive case, xs = (x:xs):
+
+  (x:xs) ++ []
+=   { applying ++ }
+  x : (xs ++ [])
+=    { applying IH }
+  (x:xs)
+  
+
+To prove: xs ++ (ys ++ zs) = (xs ++ ys) ++ zs
+
+1. Base case, xs = []:
+
+  [] ++ (ys ++ zs)
+=   { applying ++ }
+  (ys ++ zs)
+=   { unapplying ++ }
+  (([] ++ ys) ++ zs)
+=   { removing the redundant brackets }
+  ([] ++ ys) ++ zs
+
+2. Inductive case: xs = (x:xs)
+
+  (x:xs) ++ (ys + zs) 
+=   { applting ++ }
+  x : (xs ++ (ys ++ zs)
+=   { applying IH } 
+  x : (xs ++ ys) ++ zs
+=   { unapplying ++ }
+   ((x:xs) ++ ys) ++ zs

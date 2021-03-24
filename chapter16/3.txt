@@ -1,0 +1,21 @@
+To prove: all (== x) (replicate n x) = True
+
+1. Base case, n = 0.
+
+  all (==x) replicate (0 x)
+=   { applying replicate }
+  all (==x) []
+=   { applying all }
+  True
+  
+2. Inductive case, n = n+1.
+  all (==x) replicate ((n+1) x)
+=   { applying replicate }
+  all (==x) x : replicate n x
+=   { applying all }
+  (==x) x && all (==x) replicate n x
+=   { applying IH }
+  (==x) x && True
+=   { applying == }
+  True && True
+=   { applying && }
