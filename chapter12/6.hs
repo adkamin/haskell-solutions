@@ -10,4 +10,13 @@ instance Applicative ((->) a) where
     -- (<*>) :: ((->) a) (b -> c) -> (a -> b) -> (a -> c)
     -- (<*>) :: (a -> b -> c) -> (a -> b) -> (a -> c)
     f <*> g = \x -> f x (g x) -- given x, we return f x (g x)
-    
+
+instance Monad ((->) a) where
+    -- return a :: m a 
+    return = pure
+
+    -- (>>=) :: ((->) a) c -> (c -> ((->) a) b) -> ((->) a) b)
+    -- (>>=) :: (a -> c)   -> (c -> (a -> b))   -> (a -> b)
+    m >>= f = \x -> f (m x) x
+
+

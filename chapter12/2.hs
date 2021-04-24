@@ -1,3 +1,3 @@
 instance Functor ((->) a) where
-   -- fmap :: (b -> c) -> (a -> b) -> (a -> c) 
-   fmap = (.)
+    -- fmap :: (b -> c) -> (a -> b) -> (a -> c)
+    fmap f a = (.)
